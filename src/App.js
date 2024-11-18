@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import axios from "axios";
+import "./App.css";
+import { useEffect, useState } from "react";
+import Header from "./components/Header/Header";
+import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer";
 
 function App() {
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(
+        "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=381647fab25349dcad3f8971d7e1b8fa"
+      )
+      .then((data) => {
+        setCards(data.data.articles);
+      }, []);
+  });
+
+
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='veliki div'>
+      <Header />
+      <Navbar cards={cards} />
+      <Footer />
     </div>
   );
 }
